@@ -12,9 +12,8 @@ import themeFile from './utils/theme';
 const theme = createMuiTheme(themeFile);
 
 function App({blogArray}) {
+  
   let history = useHistory()
-  console.log("history in app comp:", history)
-  console.log("blogs in app comp:", blogArray)
   useAlan(history, blogArray);  
   return (
     <MuiThemeProvider theme={theme}>
