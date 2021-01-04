@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { home, about, blogs, SingleBlog } from './pages';
+import { connect } from 'react-redux';
 
-function App() {
+import useAlan from './utils/useAlan';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import Navbar from './components/navbar/Navbar';
+
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import themeFile from './utils/theme';
+
+const theme = createMuiTheme(themeFile);
+
+function App({blogArray}) {
+  let history = useHistory()
+  console.log("history in app comp:", history)
+  console.log("blogs in app comp:", blogArray)
+  useAlan(history, blogArray);  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <Navbar/>
+      <Switch>
+        <Route path="/about" component={about}/>
+        <Route path="/blogs" component={blogs}/>
+        <Route path="/blog/:slug" component={SingleBlog}/>
+        <Route exact path="/" component={home}/>
+      </Switch>
+    </MuiThemeProvider>
   );
 }
-
-export default App;
+const mapStateToProps = state => ({
+  blogArray: state.data.blogs
+})
+export default connect(mapStateToProps)(App);

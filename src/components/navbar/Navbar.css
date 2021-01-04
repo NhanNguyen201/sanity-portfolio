@@ -1,0 +1,10 @@
+.activeButton {
+    border-bottom: 2px solid white;
+}
+
+.linkButton {
+    text-decoration: none;
+    margin-left: 15px;
+    padding: 5px;
+    color: white;
+}
